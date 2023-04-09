@@ -15,34 +15,38 @@ app = Dash(__name__)
 #     "City": ["SF", "SF", "SF", "Montreal", "Montreal", "Montreal"]
 # })
 
-df_cb = pd.read_csv('dataset_CB_07-04-2023.csv',index_col=0)
-# df_cb = pd.read_csv('dataset_CB_05-04-2023.csv')
-df_cb.head(5)
+df_cb = pd.read_csv('dataset_CB_10-04-2023.csv',index_col=0)
+# df_cb = pd.read_csv('dataset_CB_09-04-2023.csv')
+
 colum_list = list(df_cb)
 
-df_airtemp_S_Code1 = df_cb.iloc[:,1:7]
-df_airtemp_S_Code2 = df_cb.iloc[:,7:11]
-df_airhumid_S_Code1 = df_cb.iloc[:,11:17]
-df_airhumid_S_Code2 = df_cb.iloc[:,17:21]
+df_time = df_cb.loc['2023-04-08 00-00-00':'2023-04-09 23-59-00']
+df_time.head()
 
-df_soil_temp_S_Code3 = df_cb.iloc[:,21:25]
-df_soil_humid_S_Code3 = df_cb.iloc[:,25:29]
-df_soil_ec_S_Code3 = df_cb.iloc[:,29:33]
-df_soil_ph_S_Code3 = df_cb.iloc[:,33:37]
-
-df_light_S_Code4 = df_cb.iloc[:,37:41]
-
-df_co2_S_Code5 = df_cb.iloc[:,41:43]
-
-fig1 = px.line(df_airtemp_S_Code1,title='Air-Temperatures')
+fig1 = px.line(df_time,x=df_time.index, y=df_cb.columns[1:11],title='Air-Temperatures')
 # fig1.show()
-fig2 = px.line(df_airhumid_S_Code1,title='Air-Humidity')
+
+
+fig2 = px.line(df_time,x=df_time.index, y=df_cb.columns[11:21],title='Air-Humidity')
 # fig2.show()
 
-fig3 = px.line(df_airtemp_S_Code2,title='Air-Temperatures')
+fig3 = px.line(df_time,x=df_time.index, y=df_cb.columns[21:25],title='Soil-Temperatures')
 # fig3.show()
-fig4 = px.line(df_airhumid_S_Code2,title='Air-Humidity')
+
+fig4 = px.line(df_time,x=df_time.index, y=df_cb.columns[25:29],title='Soil-Humidity')
 # fig4.show()
+
+fig5 = px.line(df_time,x=df_time.index, y=df_cb.columns[29:33],title='Soil-EC')
+# fig5.show()
+
+fig5 = px.line(df_time,x=df_time.index, y=df_cb.columns[33:37],title='Soil-PH')
+# fig5.show()
+
+fig6 = px.line(df_time,x=df_time.index, y=df_cb.columns[37:41],title='light-Lux')
+# fig6.show()
+
+fig7 = px.line(df_time,x=df_time.index, y=df_cb.columns[41:43],title='Co2-ppm')
+# fig7.show()
 
 
 
@@ -60,7 +64,9 @@ app.layout = html.Div(children=[
 
     dcc.Graph(
         id='example-graph',
-        figure=fig1
+        figure=fig1,
+
+       
     )
 ])
 
